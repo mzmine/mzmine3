@@ -75,10 +75,10 @@ import javax.annotation.Nullable;
  * Map of all feature related data.
  *
  * @author Robin Schmid (robinschmid@uni-muenster.de)
- *         <p>
- *         TODO: I think the RawFileType should also be in the map and not just accessible via the
- *         key set of {@link ModularFeatureListRow#getFilesFeatures}. -> add during fueature list
- *         creation in the chromatogram builder ~SteffenHeu
+ * <p>
+ * TODO: I think the RawFileType should also be in the map and not just accessible via the key set
+ * of {@link ModularFeatureListRow#getFilesFeatures}. -> add during fueature list creation in the
+ * chromatogram builder ~SteffenHeu
  */
 @SuppressWarnings("rawtypes")
 public class ModularFeatureListRow implements FeatureListRow, ModularDataModel {
@@ -239,19 +239,9 @@ public class ModularFeatureListRow implements FeatureListRow, ModularDataModel {
     return v == null || v.getValue() == null ? Range.singleton(0d) : v.getValue();
   }
 
-  public float getHeight() {
-    Property<Float> v = get(HeightType.class);
-    return v == null || v.getValue() == null ? Float.NaN : v.getValue();
-  }
-
-  public float getArea() {
-    Property<Float> v = get(AreaType.class);
-    return v == null || v.getValue() == null ? Float.NaN : v.getValue();
-  }
-
   public ObservableMap<RawDataFile, ModularFeature> getFilesFeatures() {
     MapProperty<RawDataFile, ModularFeature> v = get(FeaturesType.class);
-    return v == null || v.getValue() == null ? null : v.getValue();
+    return v == null? null : v.getValue();
   }
 
   @Override
@@ -325,27 +315,27 @@ public class ModularFeatureListRow implements FeatureListRow, ModularDataModel {
   }
 
   @Override
-  public double getAverageMZ() {
+  public Double getAverageMZ() {
     Property<Double> v = get(MZType.class);
-    return v == null || v.getValue() == null ? Double.NaN : v.getValue();
+    return v == null? null : v.getValue();
   }
 
   @Override
-  public float getAverageRT() {
+  public Float getAverageRT() {
     Property<Float> v = get(RTType.class);
-    return v == null || v.getValue() == null ? Float.NaN : v.getValue();
+    return v == null? null : v.getValue();
   }
 
   @Override
-  public float getAverageMobility() {
+  public Float getAverageMobility() {
     Property<Float> v = get(MobilityType.class);
-    return v == null || v.getValue() == null ? Float.NaN : v.getValue();
+    return v == null? null : v.getValue();
   }
 
   @Override
-  public double getAverageHeight() {
-    Property<Float> v = get(HeightType.class);
-    return v == null || v.getValue() == null ? Float.NaN : v.getValue();
+  public Double getAverageHeight() {
+    Property<Double> v = get(HeightType.class);
+    return v == null? null : v.getValue();
   }
 
   @Override
@@ -355,9 +345,9 @@ public class ModularFeatureListRow implements FeatureListRow, ModularDataModel {
   }
 
   @Override
-  public double getAverageArea() {
-    Property<Float> v = get(AreaType.class);
-    return v == null || v.getValue() == null ? Float.NaN : v.getValue();
+  public Double getAverageArea() {
+    Property<Double> v = get(AreaType.class);
+    return v == null? null : v.getValue();
   }
 
   @Override
@@ -448,12 +438,12 @@ public class ModularFeatureListRow implements FeatureListRow, ModularDataModel {
   }
 
   @Override
-  public void setAverageMZ(double averageMZ) {
+  public void setAverageMZ(Double averageMZ) {
     // binding
   }
 
   @Override
-  public void setAverageRT(float averageRT) {
+  public void setAverageRT(Float averageRT) {
     // binding
   }
 
@@ -540,17 +530,22 @@ public class ModularFeatureListRow implements FeatureListRow, ModularDataModel {
   }
 
   @Override
-  public double getMaxDataPointIntensity() {
-    ObjectProperty<Range<Float>> rangeObjectProperty = get(IntensityRangeType.class);
+  public Double getMaxDataPointIntensity() {
+    ObjectProperty<Range<Double>> rangeObjectProperty = get(IntensityRangeType.class);
     return rangeObjectProperty != null && rangeObjectProperty.getValue() != null ?
-        rangeObjectProperty.getValue().upperEndpoint() : Double.NaN;
+        rangeObjectProperty.getValue().upperEndpoint() : null;
   }
 
   @Nullable
   @Override
   public ModularFeature getBestFeature() {
-    return streamFeatures().filter(f -> !f.get(DetectionType.class).equals(FeatureStatus.UNKNOWN))
-        .sorted(new FeatureSorter(SortingProperty.Height, SortingDirection.Descending)).findFirst()
+    ObservableList<Feature> features = getFeatures();
+    if (features.size() == 1) {
+      return (ModularFeature) features.get(0);
+    }
+    return features.stream().map(ModularFeature.class::cast).filter(Objects::nonNull)
+        .filter(f -> !f.get(DetectionType.class).equals(FeatureStatus.UNKNOWN))
+        .max(new FeatureSorter(SortingProperty.Height, SortingDirection.Ascending))
         .orElse(null);
   }
 
@@ -583,12 +578,9 @@ public class ModularFeatureListRow implements FeatureListRow, ModularDataModel {
   public ObservableList<Scan> getAllMS2Fragmentations() {
     ObservableList<Scan> allMS2ScansList = FXCollections.observableArrayList();
     for (Feature feature : getFeatures()) {
-      RawDataFile rawData = feature.getRawDataFile();
       ObservableList<Scan> scans = feature.getAllMS2FragmentScans();
       if (scans != null) {
-        for (Scan scan : scans) {
-          allMS2ScansList.add(scan);
-        }
+        allMS2ScansList.addAll(scans);
       }
     }
 

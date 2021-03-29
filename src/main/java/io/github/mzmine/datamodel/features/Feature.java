@@ -45,42 +45,42 @@ public interface Feature {
   /**
    * This method returns raw M/Z value of the feature
    */
-  double getMZ();
+  Double getMZ();
 
   /**
    * Sets raw M/Z value of the feature
    */
-  void setMZ(double mz);
+  void setMZ(Double mz);
 
   /**
    * This method returns raw retention time of the feature in minutes
    */
-  float getRT();
+  Float getRT();
 
   /**
    * Sets retention time of the feature
    */
-  void setRT(float rt);
+  void setRT(Float rt);
 
   /**
    * This method returns the raw height of the feature
    */
-  float getHeight();
+  Double getHeight();
 
   /**
    * Sets height of the feature
    */
-  void setHeight(float height);
+  void setHeight(Double height);
 
   /**
    * This method returns the raw area of the feature
    */
-  float getArea();
+  Double getArea();
 
   /**
    * Sets area of the feature
    */
-  void setArea(float area);
+  void setArea(Double area);
 
   /**
    * Returns raw data file where this feature is present
@@ -97,8 +97,8 @@ public interface Feature {
   /**
    * Used to loop over scans and data points in combination with ({@link #getDataPointAtIndex(int)}
    *
-   * @param i
-   * @return
+   * @param i index
+   * @return scan at index or null
    */
   @Nullable
   default Scan getScanAtIndex(int i) {
@@ -110,11 +110,11 @@ public interface Feature {
    * Used to loop over retention time, scans, and data points in combination with ({@link
    * #getDataPointAtIndex(int)}
    *
-   * @param i
-   * @return
+   * @param i index
+   * @return retention time at index or null
    */
   @Nullable
-  default float getRetentionTimeAtIndex(int i) {
+  default Float getRetentionTimeAtIndex(int i) {
     List<Scan> scans = getScanNumbers();
     return scans == null ? null : scans.get(i).getRetentionTime();
   }
@@ -122,8 +122,8 @@ public interface Feature {
   /**
    * Used to loop over scans and data points in combination with ({@link #getDataPointAtIndex(int)}
    *
-   * @param i
-   * @return
+   * @param i index
+   * @return data point at index
    */
   @Deprecated
   @Nullable
@@ -141,7 +141,7 @@ public interface Feature {
   /**
    * The representative scan of this feature
    *
-   * @param scan
+   * @param scan MS1 scan at highest intensity
    */
   void setRepresentativeScan(Scan scan);
 
@@ -177,7 +177,7 @@ public interface Feature {
    * Returns the range of intensity values of all raw data points used to detect this feature
    */
   @Nonnull
-  Range<Float> getRawDataPointsIntensityRange();
+  Range<Double> getRawDataPointsIntensityRange();
 
   /**
    * Returns the number of scan that represents the fragmentation of this feature in MS2 level.
@@ -194,7 +194,6 @@ public interface Feature {
    *
    * @param allMS2FragmentScanNumbers
    */
-  //void setAllMS2FragmentScanNumbers(List<Integer> allMS2FragmentScanNumbers); ?
   void setAllMS2FragmentScans(ObservableList<Scan> allMS2FragmentScanNumbers);
 
   /**
@@ -221,7 +220,7 @@ public interface Feature {
   /**
    * Sets the {@link MobilityType} of this feature.
    *
-   * @param mobilityUnit
+   * @param mobilityUnit define mobility unit
    */
   void setMobilityUnit(MobilityType mobilityUnit);
 
@@ -252,7 +251,7 @@ public interface Feature {
   /**
    * Set best fragment scan
    *
-   * @param fragmentScan
+   * @param fragmentScan set best fragmentation scan
    */
   void setFragmentScan(Scan fragmentScan);
 
@@ -280,32 +279,32 @@ public interface Feature {
   /**
    * This method returns the full width at half maximum (FWHM) of the feature
    */
-  float getFWHM();
+  Float getFWHM();
 
   /**
    * Sets the full width at half maximum (FWHM)
    */
-  void setFWHM(double fwhm);
+  void setFWHM(Float fwhm);
 
   /**
    * This method returns the tailing factor of the feature
    */
-  float getTailingFactor();
+  Float getTailingFactor();
 
   /**
    * Sets the tailing factor
    */
-  void setTailingFactor(double tf);
+  void setTailingFactor(Float tf);
 
   /**
    * This method returns the asymmetry factor of the feature
    */
-  float getAsymmetryFactor();
+  Float getAsymmetryFactor();
 
   /**
    * Sets the asymmetry factor
    */
-  void setAsymmetryFactor(double af);
+  void setAsymmetryFactor(Float af);
 
   // dulab Edit
   void outputChromToFile();
