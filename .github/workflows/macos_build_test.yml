@@ -2,11 +2,11 @@ name: macOS Test Build
 
 on:
   push:
-    branches: [ macos-signing ]
+    branches: [ macos_signing ]
     paths-ignore:
       - 'src/main/resources/mzmineversion.properties'
   pull_request:
-    branches: [ macos-signing ]
+    branches: [ macos_signing ]
 
 jobs:
   gradle_build:
