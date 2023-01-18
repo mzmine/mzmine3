@@ -3,7 +3,7 @@ name: macOS test sign
 on: workflow_dispatch
 
 jobs:
-
+  # only runs on mac for now can merge later inot the other
   # test build and sign macos
   macos-signed-build:
     name: Build signed macOS
