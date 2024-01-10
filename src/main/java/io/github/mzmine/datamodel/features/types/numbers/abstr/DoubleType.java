@@ -162,4 +162,16 @@ public abstract class DoubleType extends NumberType<Double> {
     }
     return result;
   }
+
+  @Override
+  public @Nullable Double valueFromString(String str) {
+    if(str == null) {
+      return null;
+    }
+    try {
+      return Double.parseDouble(str);
+    } catch (NumberFormatException e) {
+      return null;
+    }
+  }
 }

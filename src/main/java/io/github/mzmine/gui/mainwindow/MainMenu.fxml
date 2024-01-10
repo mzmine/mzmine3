@@ -500,6 +500,12 @@
         <MenuItem text="MS2 similarity search"
           onAction="#runModule"
           userData="io.github.mzmine.modules.dataprocessing.id_ms2search.Ms2SearchModule"/>
+        <MenuItem
+          text="Rate compound annotations (Sirius)"
+          onAction="#runModule"
+          userData="io.github.mzmine.modules.dataprocessing.id_sirius_cli.sirius_bridge.SiriusRatingModule"/>
+        <MenuItem text="Import annotations from Sirius project" onAction="#runModule"
+          userData="io.github.mzmine.modules.dataprocessing.id_sirius_cli.sirius_import.SiriusResultsImportModule"/>
       </Menu>
 
       <Menu text="EC-MS workflow">

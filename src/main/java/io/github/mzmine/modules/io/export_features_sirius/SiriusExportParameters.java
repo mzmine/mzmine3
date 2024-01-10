@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2022 The MZmine Development Team
+ * Copyright (c) 2004-2023 The MZmine Development Team
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -86,8 +86,20 @@ public class SiriusExportParameters extends SimpleParameterSet {
       FileSelectionType.SAVE);
 
   public SiriusExportParameters() {
-    super(new Parameter[]{FEATURE_LISTS, FILENAME, MERGE_PARAMETER, MZ_TOL, NEED_ANNOTATION,
-        EXCLUDE_MULTICHARGE, EXCLUDE_MULTIMERS});
+    super(getParameters(false));
+  }
+
+  public SiriusExportParameters(boolean subParameters) {
+    super(getParameters(subParameters));
+  }
+
+  private static Parameter[] getParameters(boolean isSubParameterSet) {
+    if (isSubParameterSet) {
+      return new Parameter[]{MERGE_PARAMETER, MZ_TOL, NEED_ANNOTATION, EXCLUDE_MULTICHARGE,
+          EXCLUDE_MULTIMERS};
+    }
+    return new Parameter[]{FEATURE_LISTS, FILENAME, MERGE_PARAMETER, MZ_TOL, NEED_ANNOTATION,
+        EXCLUDE_MULTICHARGE, EXCLUDE_MULTIMERS};
   }
 
   // public static final BooleanParameter FRACTIONAL_MZ = new

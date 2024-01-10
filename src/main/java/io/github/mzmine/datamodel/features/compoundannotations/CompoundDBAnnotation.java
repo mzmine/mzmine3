@@ -256,6 +256,24 @@ public interface CompoundDBAnnotation extends Cloneable, FeatureAnnotation,
     return get(PrecursorMZType.class);
   }
 
+  public default boolean hasValueForTypes(DataType<?>... types) {
+    for (DataType<?> type : types) {
+      if (get(type) == null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public default boolean hasValueForTypes(List<DataType<?>> types) {
+    for (DataType<?> type : types) {
+      if (get(type) == null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @Nullable
   default String getSmiles() {
     return get(SmilesStructureType.class);

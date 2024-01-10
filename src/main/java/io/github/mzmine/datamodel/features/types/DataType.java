@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2022 The MZmine Development Team
+ * Copyright (c) 2004-2023 The MZmine Development Team
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -428,5 +428,21 @@ public abstract class DataType<T> implements Comparable<DataType> {
       default:
         return null;
     }
+  }
+
+
+  /**
+   * Converts the given string value to a value of this data type or null, if not implemented.
+   *
+   * @param str The string value to convert.
+   * @return The value of type {@link T} or null if the value cannot be converted or the conversion
+   * is not implemented.
+   *
+   * TODO remove this method!!!!
+   */
+  @Nullable
+  public T valueFromString(@Nullable String str) {
+    logger.finest(() -> "String conversion not implemented for data type " + this.getClass().toString());
+    return null;
   }
 }

@@ -136,7 +136,8 @@ public class CCSUtils {
             new ImportType(true, "charge", DataTypes.get(ChargeType.class))), content[0],
         new SimpleStringProperty());
 
-    if (importTypes == null) {
+    if (importTypes.size() != 4) {
+      // not all columns found
       return null;
     }
 

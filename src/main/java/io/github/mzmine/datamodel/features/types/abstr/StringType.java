@@ -82,4 +82,9 @@ public abstract class StringType extends DataType<String> {
     }
     return text;
   }
+
+  @Override
+  public @Nullable String valueFromString(String str) {
+    return str;
+  }
 }
