@@ -289,12 +289,12 @@
 
   <!-- FEATURE LIST METHODS -->
   <Menu text="Feature list methods">
-<!--    <Menu text="Import feature list">-->
-<!--      <MenuItem text="mzTab-m" onAction="#runModule"-->
-<!--        userData="io.github.mzmine.modules.io.import_features_mztabm.MZTabmImportModule"/>-->
+    <Menu text="Import feature list">
+      <MenuItem text="mzTab-m" onAction="#runModule"
+        userData="io.github.mzmine.modules.io.import_features_mztabm.MZTabmImportModule"/>
 <!--      <MenuItem text="csv" onAction="#runModule"-->
 <!--        userData="io.github.mzmine.modules.io.import_features_csv.CsvImportModule"/>-->
-<!--    </Menu>-->
+    </Menu>
 
     <Menu text="Export feature list">
       <Menu text="Graphics">
@@ -578,8 +578,8 @@
 
     <MenuItem onAction="#runModule" text="MS/MS scatter plot"
       userData="io.github.mzmine.modules.visualization.msms.MsMsVisualizerModule"/>
-    <MenuItem onAction="#runModule" text="Feature overview / Interactive Ion Identity Molecular Networks"
-      userData="io.github.mzmine.modules.visualization.network_overview.FeatureNetworkOverviewModule"/>
+    <MenuItem onAction="#runModule" text="Interactive Ion Identity Molecular Networks"
+      userData="io.github.mzmine.modules.visualization.networking.AnnotationNetworkModule"/>
     <MenuItem onAction="#runModule" text="Correlated features Δm/z histogram"
       userData="io.github.mzmine.modules.visualization.scan_histogram.CorrelatedFeaturesMzHistogramModule"/>
     <MenuItem onAction="#runModule"
