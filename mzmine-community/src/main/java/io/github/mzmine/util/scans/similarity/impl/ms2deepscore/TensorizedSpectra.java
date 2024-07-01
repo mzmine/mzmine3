@@ -23,16 +23,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.mzmine.javafx.components.factories;
+package io.github.mzmine.util.scans.similarity.impl.ms2deepscore;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.CheckBox;
+public record TensorizedSpectra(float[][] tensorizedFragments, float[][] tensorizedMetadata) {
 
-public class FxCheckBox {
-
-  public static CheckBox newCheckBox(String text, BooleanProperty selectedProperty) {
-    var box = new CheckBox(text);
-    box.selectedProperty().bindBidirectional(selectedProperty);
-    return box;
-  }
 }

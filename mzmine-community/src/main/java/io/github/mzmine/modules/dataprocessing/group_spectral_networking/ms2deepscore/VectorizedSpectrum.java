@@ -23,16 +23,11 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.mzmine.javafx.components.factories;
+package io.github.mzmine.modules.dataprocessing.group_spectral_networking.ms2deepscore;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.CheckBox;
+import io.github.mzmine.datamodel.Scan;
+import io.github.mzmine.datamodel.features.FeatureListRow;
 
-public class FxCheckBox {
+public record VectorizedSpectrum(FeatureListRow row, Scan scan, double[] vector) {
 
-  public static CheckBox newCheckBox(String text, BooleanProperty selectedProperty) {
-    var box = new CheckBox(text);
-    box.selectedProperty().bindBidirectional(selectedProperty);
-    return box;
-  }
 }

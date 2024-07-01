@@ -23,16 +23,40 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.mzmine.javafx.components.factories;
+package io.github.mzmine.datamodel.features.correlation;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.CheckBox;
+import io.github.mzmine.datamodel.features.FeatureListRow;
+import org.jetbrains.annotations.NotNull;
 
-public class FxCheckBox {
 
-  public static CheckBox newCheckBox(String text, BooleanProperty selectedProperty) {
-    var box = new CheckBox(text);
-    box.selectedProperty().bindBidirectional(selectedProperty);
-    return box;
+/**
+ * MS2Deepscore similarity between two rows (the best MS2 spectra)
+ */
+public class R2RSimpleSimilarity extends InternalTypedRowsRelationship {
+
+  private final float similarity;
+
+  /**
+   * MS2Deepscore similarity
+   *
+   * @param a          the two rows
+   * @param b          the two rows
+   * @param similarity cosine similarity
+   */
+  public R2RSimpleSimilarity(FeatureListRow a, FeatureListRow b, Type type, float similarity) {
+    super(a, b, type);
+    this.similarity = similarity;
   }
+
+  @Override
+  public double getScore() {
+    return similarity;
+  }
+
+  @NotNull
+  @Override
+  public String getAnnotation() {
+    return "score=" + getScoreFormatted();
+  }
+
 }

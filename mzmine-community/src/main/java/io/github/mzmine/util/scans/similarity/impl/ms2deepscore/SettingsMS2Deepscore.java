@@ -23,16 +23,19 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.mzmine.javafx.components.factories;
+package io.github.mzmine.util.scans.similarity.impl.ms2deepscore;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.CheckBox;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-public class FxCheckBox {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public record SettingsMS2Deepscore(@JsonProperty("embedding_dim") Integer embeddingDimension,
+                                   String ionisationMode, @JsonProperty("min_mz") int minimumMZ,
+                                   @JsonProperty("max_mz") int maximumMZ,
+                                   @JsonProperty("mz_bin_width") Double binWidth,
+                                   Object[][] additionalMetadata, float intensityScaling
 
-  public static CheckBox newCheckBox(String text, BooleanProperty selectedProperty) {
-    var box = new CheckBox(text);
-    box.selectedProperty().bindBidirectional(selectedProperty);
-    return box;
-  }
+) {
+
 }

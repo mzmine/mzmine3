@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2023 The MZmine Development Team
+ * Copyright (c) 2004-2024 The mzmine Development Team
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -33,6 +33,7 @@ import static io.github.mzmine.modules.visualization.networking.visual.enums.Nod
 import io.github.mzmine.datamodel.DataPoint;
 import io.github.mzmine.datamodel.Scan;
 import io.github.mzmine.datamodel.features.Feature;
+import io.github.mzmine.datamodel.features.FeatureList;
 import io.github.mzmine.datamodel.features.FeatureListRow;
 import io.github.mzmine.datamodel.features.ModularFeatureList;
 import io.github.mzmine.datamodel.features.SimpleFeatureListAppliedMethod;
@@ -374,8 +375,10 @@ public class SpectralNetworkingTask extends AbstractTask {
         R2RNetworkingMaps rowMaps = featureList.getRowMaps();
         rowMaps.addAllRowsRelationships(mapCosineSim, Type.MS2_COSINE_SIM);
         rowMaps.addAllRowsRelationships(mapNeutralLoss, Type.MS2_NEUTRAL_LOSS_SIM);
-
-        addNetworkStatisticsToRows();
+        R2RNetworkingMaps onlyCosineMap = new R2RNetworkingMaps();
+        onlyCosineMap.addAllRowsRelationships(featureList.getMs2SimilarityMap().get(),
+            Type.MS2_COSINE_SIM);
+        addNetworkStatisticsToRows(featureList, onlyCosineMap);
       }
 
       logger.info("Added %d edges for %s".formatted(mapCosineSim.size(), Type.MS2_COSINE_SIM));
@@ -400,14 +403,12 @@ public class SpectralNetworkingTask extends AbstractTask {
     }
   }
 
-  private void addNetworkStatisticsToRows() {
-    // create graph from Type.MS2_COSINE_SIM
+  public static void addNetworkStatisticsToRows(@Nullable FeatureList featureList,
+      R2RNetworkingMaps r2RNetworkingMaps) {
     // set community and cluster_index
     FeatureNetworkGenerator generator = new FeatureNetworkGenerator();
-    R2RNetworkingMaps onlyCosineMap = new R2RNetworkingMaps();
-    onlyCosineMap.addAllRowsRelationships(featureList.getMs2SimilarityMap().get(),
-        Type.MS2_COSINE_SIM);
-    var graph = generator.createNewGraph(featureList.getRows(), false, true, onlyCosineMap, false);
+    var graph = generator.createNewGraph(featureList.getRows(), false, true, r2RNetworkingMaps,
+        false);
     GraphStreamUtils.detectCommunities(graph);
 
     Object2IntMap<Object> communitySizes = GraphStreamUtils.getCommunitySizes(graph);
